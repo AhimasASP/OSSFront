@@ -1,13 +1,28 @@
 .Layout {
-    height: 100vh;
     display: flex;
-    flex-direction: column;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    flex-grow: 1;
+    width: 100%;margin: 0;
+    padding: 0;
+    background: linear-gradient(180deg, black 0%, cadetblue 100%);
+}
+
+.Layout > div {
+    width: 100%;
+    max-width: 600px;
+    padding: 0 20px;
 }
 
 .Layout h1 {
     color: #fff;
-    margin-left: 10px;
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+    text-align: center;
+}
+
+.LayoutForm {
+    background: #eee;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, .5);
+    padding: 15px;
+    border-radius: 5px;
 }

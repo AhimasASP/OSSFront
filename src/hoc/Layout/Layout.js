@@ -8,7 +8,12 @@ class Layout extends Component {
     render() {
         return (
             <div className={classes.Layout}>
-                    <h1>Hello</h1>
+                <div>
+                <h1>Authorization</h1>
+                    <form className={classes.LayoutForm}>
+                        <Adornment/>
+                    </form>
+                </div>
             </div>
         )
     }

@@ -17,9 +17,10 @@ const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
         flexWrap: 'wrap',
+        textAlign: "center"
     },
     margin: {
-        margin: theme.spacing(1),
+         margin: "auto",
     },
     withoutLabel: {
         marginTop: theme.spacing(3),
@@ -54,27 +55,8 @@ export default function InputAdornments() {
     return (
         <div className={classes.root}>
             <div>
-                {/*<TextField*/}
-                {/*    label="With normal TextField"*/}
-                {/*    id="standard-start-adornment"*/}
-                {/*    className={clsx(classes.margin, classes.textField)}*/}
-                {/*    InputProps={{*/}
-                {/*        startAdornment: <InputAdornment position="start">Kg</InputAdornment>,*/}
-                {/*    }}*/}
-                {/*/>*/}
-                {/*<FormControl className={clsx(classes.margin, classes.withoutLabel, classes.textField)}>*/}
-                {/*    <Input*/}
-                {/*        id="standard-adornment-weight"*/}
-                {/*        value={values.weight}*/}
-                {/*        onChange={handleChange('weight')}*/}
-                {/*        endAdornment={<InputAdornment position="end">Kg</InputAdornment>}*/}
-                {/*        aria-describedby="standard-weight-helper-text"*/}
-                {/*        inputProps={{*/}
-                {/*            'aria-label': 'weight',*/}
-                {/*        }}*/}
-                {/*    />*/}
-                {/*    <FormHelperText id="standard-weight-helper-text">Weight</FormHelperText>*/}
-                {/*</FormControl>*/}
+                <TextField className={clsx(classes.margin, classes.textField)} required id="standard-required" label="Login" />
+            </div>
                 <FormControl className={clsx(classes.margin, classes.textField)}>
                     <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
                     <Input
@@ -95,127 +77,6 @@ export default function InputAdornments() {
                         }
                     />
                 </FormControl>
-            {/*    <FormControl fullWidth className={classes.margin}>*/}
-            {/*        <InputLabel htmlFor="standard-adornment-amount">Amount</InputLabel>*/}
-            {/*        <Input*/}
-            {/*            id="standard-adornment-amount"*/}
-            {/*            value={values.amount}*/}
-            {/*            onChange={handleChange('amount')}*/}
-            {/*            startAdornment={<InputAdornment position="start">$</InputAdornment>}*/}
-            {/*        />*/}
-            {/*    </FormControl>*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    <TextField*/}
-            {/*        label="With normal TextField"*/}
-            {/*        id="filled-start-adornment"*/}
-            {/*        className={clsx(classes.margin, classes.textField)}*/}
-            {/*        InputProps={{*/}
-            {/*            startAdornment: <InputAdornment position="start">Kg</InputAdornment>,*/}
-            {/*        }}*/}
-            {/*        variant="filled"*/}
-            {/*    />*/}
-            {/*    <FormControl className={clsx(classes.margin, classes.textField)} variant="filled">*/}
-            {/*        <FilledInput*/}
-            {/*            id="filled-adornment-weight"*/}
-            {/*            value={values.weight}*/}
-            {/*            onChange={handleChange('weight')}*/}
-            {/*            endAdornment={<InputAdornment position="end">Kg</InputAdornment>}*/}
-            {/*            aria-describedby="filled-weight-helper-text"*/}
-            {/*            inputProps={{*/}
-            {/*                'aria-label': 'weight',*/}
-            {/*            }}*/}
-            {/*        />*/}
-            {/*        <FormHelperText id="filled-weight-helper-text">Weight</FormHelperText>*/}
-            {/*    </FormControl>*/}
-            {/*    <FormControl className={clsx(classes.margin, classes.textField)} variant="filled">*/}
-            {/*        <InputLabel htmlFor="filled-adornment-password">Password</InputLabel>*/}
-            {/*        <FilledInput*/}
-            {/*            id="filled-adornment-password"*/}
-            {/*            type={values.showPassword ? 'text' : 'password'}*/}
-            {/*            value={values.password}*/}
-            {/*            onChange={handleChange('password')}*/}
-            {/*            endAdornment={*/}
-            {/*                <InputAdornment position="end">*/}
-            {/*                    <IconButton*/}
-            {/*                        aria-label="toggle password visibility"*/}
-            {/*                        onClick={handleClickShowPassword}*/}
-            {/*                        onMouseDown={handleMouseDownPassword}*/}
-            {/*                        edge="end"*/}
-            {/*                    >*/}
-            {/*                        {values.showPassword ? <Visibility /> : <VisibilityOff />}*/}
-            {/*                    </IconButton>*/}
-            {/*                </InputAdornment>*/}
-            {/*            }*/}
-            {/*        />*/}
-            {/*    </FormControl>*/}
-            {/*    <FormControl fullWidth className={classes.margin} variant="filled">*/}
-            {/*        <InputLabel htmlFor="filled-adornment-amount">Amount</InputLabel>*/}
-            {/*        <FilledInput*/}
-            {/*            id="filled-adornment-amount"*/}
-            {/*            value={values.amount}*/}
-            {/*            onChange={handleChange('amount')}*/}
-            {/*            startAdornment={<InputAdornment position="start">$</InputAdornment>}*/}
-            {/*        />*/}
-            {/*    </FormControl>*/}
-            {/*</div>*/}
-            {/*<div>*/}
-            {/*    <TextField*/}
-            {/*        label="With normal TextField"*/}
-            {/*        id="outlined-start-adornment"*/}
-            {/*        className={clsx(classes.margin, classes.textField)}*/}
-            {/*        InputProps={{*/}
-            {/*            startAdornment: <InputAdornment position="start">Kg</InputAdornment>,*/}
-            {/*        }}*/}
-            {/*        variant="outlined"*/}
-            {/*    />*/}
-            {/*    <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">*/}
-            {/*        <OutlinedInput*/}
-            {/*            id="outlined-adornment-weight"*/}
-            {/*            value={values.weight}*/}
-            {/*            onChange={handleChange('weight')}*/}
-            {/*            endAdornment={<InputAdornment position="end">Kg</InputAdornment>}*/}
-            {/*            aria-describedby="outlined-weight-helper-text"*/}
-            {/*            inputProps={{*/}
-            {/*                'aria-label': 'weight',*/}
-            {/*            }}*/}
-            {/*            labelWidth={0}*/}
-            {/*        />*/}
-            {/*        <FormHelperText id="outlined-weight-helper-text">Weight</FormHelperText>*/}
-            {/*    </FormControl>*/}
-            {/*    <FormControl className={clsx(classes.margin, classes.textField)} variant="outlined">*/}
-            {/*        <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>*/}
-            {/*        <OutlinedInput*/}
-            {/*            id="outlined-adornment-password"*/}
-            {/*            type={values.showPassword ? 'text' : 'password'}*/}
-            {/*            value={values.password}*/}
-            {/*            onChange={handleChange('password')}*/}
-            {/*            endAdornment={*/}
-            {/*                <InputAdornment position="end">*/}
-            {/*                    <IconButton*/}
-            {/*                        aria-label="toggle password visibility"*/}
-            {/*                        onClick={handleClickShowPassword}*/}
-            {/*                        onMouseDown={handleMouseDownPassword}*/}
-            {/*                        edge="end"*/}
-            {/*                    >*/}
-            {/*                        {values.showPassword ? <Visibility /> : <VisibilityOff />}*/}
-            {/*                    </IconButton>*/}
-            {/*                </InputAdornment>*/}
-            {/*            }*/}
-            {/*            labelWidth={70}*/}
-            {/*        />*/}
-            {/*    </FormControl>*/}
-            {/*    <FormControl fullWidth className={classes.margin} variant="outlined">*/}
-            {/*        <InputLabel htmlFor="outlined-adornment-amount">Amount</InputLabel>*/}
-            {/*        <OutlinedInput*/}
-            {/*            id="outlined-adornment-amount"*/}
-            {/*            value={values.amount}*/}
-            {/*            onChange={handleChange('amount')}*/}
-            {/*            startAdornment={<InputAdornment position="start">$</InputAdornment>}*/}
-            {/*            labelWidth={60}*/}
-            {/*        />*/}
-            {/*    </FormControl>*/}
-            </div>
         </div>
     );
 }

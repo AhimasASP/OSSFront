@@ -1,0 +1,13 @@
+.Layout {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.Layout h1 {
+    color: #fff;
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}

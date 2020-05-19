@@ -1,12 +1,17 @@
-import React from 'react';
-
+import React, {Component} from 'react';
+import Layout from "./hoc/Layout/Layout";
 
 function App() {
-  return (
-    <div>
+    return (
+        <Layout>
 
-    </div>
-  );
+        </Layout>
+    );
 }
 
-export default App;
+export default App
+
+
+
+
+

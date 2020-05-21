@@ -1,0 +1,18 @@
+.Input {
+    display: flex;
+    flexWrap: wrap
+}
+
+.margin {
+    margin: auto
+}
+
+ .textField {
+    width: 25ch
+}
+
+.error {
+    color: #f01f30;
+    font-size: 12px;
+    font-weight: bold;
+}

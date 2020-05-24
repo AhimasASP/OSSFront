@@ -27,7 +27,7 @@ const Inputs = props =>  {
     });
 
     const handleChange = (prop) => (event) => {
-        //props.onChange()
+        props.onChange(event)
         setValues({ ...values, [prop]: event.target.value });
     };
 
@@ -63,8 +63,8 @@ const Inputs = props =>  {
                             id="standard-adornment-password"
                             type={values.showPassword ? 'text' : 'password'}
                             value={values.password}
-                            //onChange={handleChange('password')}
-                            onChange={props.onChange}
+                            onChange={handleChange('password')}
+                            //onChange={props.onChange}
                             endAdornment={
                                 <InputAdornment position="end">
                                     <IconButton

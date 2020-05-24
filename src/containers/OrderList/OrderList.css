@@ -1,0 +1,41 @@
+.OrderList {
+    display: flex;
+    justify-content: center;
+    padding-top: 50px;
+    padding-bottom: 50px;
+    flex-grow: 1;
+    width: 100%;
+    background: linear-gradient(180deg, black 0%, cadetblue 100%);
+}
+.OrderList > div {
+    width: 100%;
+    height: 100%;
+    max-width: 90%;
+    padding: 0 20px;
+    display: block;
+}
+
+.OrderList h1 {
+    color: #fff;
+    text-align: center;
+}
+
+.OrderList h2 {
+    text-align: left;
+    width: 100px;
+}
+
+.OrderListForm {
+    background: #eee;
+    box-shadow: 2px 2px 2px rgba(0, 0, 0, .5);
+    padding: 15px;
+    border-radius: 5px;
+    width: 95%;
+}
+.OrderListForm tr {
+    background: white;
+}
+
+
+
+

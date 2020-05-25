@@ -3,16 +3,16 @@ import axios from 'axios'
 import Order from '../../components/Order/Order'
 import classes from './OrderList.css'
 import TableTmp from "../../UI/Table/TableTmp";
-import Table1 from "../../UI/Table/Table1";
-import SearchInput from "../../UI/SearchInput";
 
 
 export default class OrderList extends Component {
 
     state = {
         orderList: [],
+        edit: false,
         orderForDetailsId: '',
         details: null,
+        showImage: null,
         columns: [
             {id: 'orderNumber', label: 'Order number', minWidth: 50},
             {id: 'orderStatus', label: 'Status', minWidth: 30},
@@ -25,7 +25,6 @@ export default class OrderList extends Component {
     }
 
     async componentDidMount() {
-        console.log('ComponentDidMount')
         try {
             let response = await axios.get('https://localhost:44374/Order/Index')
             const orderList = []
@@ -41,9 +40,6 @@ export default class OrderList extends Component {
                 })
             })
 
-            if (!!this.state.orderForDetailsId) {
-                console.log(this.state.orderForDetailsId)
-            }
 
             this.setState({
                 orderList, loading: false
@@ -54,32 +50,77 @@ export default class OrderList extends Component {
     }
 
 
+
    showDetailsHandler = async (id) => {
        const response = await axios.get(`https://localhost:44374/Order/Get/${id}`)
        this.setState({
            orderForDetailsId: id,
            details: response.data
        })
-       if (!!this.state.details) {
-           console.log(this.state.details)
-       }
-   }
+    }
 
+    showImageHandler = async (id) => {
+        const response = await axios.get(`https://localhost:44374/Image/Get/${id}`)
+
+        this.setState({
+            showImage: response.data
+        })
+    }
+
+    onImageCloseHandler = () => {
+        this.setState({
+            showImage: null
+        })
+    }
+
+    onDetailsCloseHandler = () => {
+        this.setState({
+            details: null,
+            showImage: null
+        })
+    }
+
+    onSearchHandler = async (param) => {
+
+        if (param === '') return {}
+        const response = await axios.get(`https://localhost:44374/Order/Search/${param}`)
+        const orders = []
+
+        response.data.map((order, index) => {
+             orders.push({
+                id: order.id,
+                orderNumber: order.orderNumber,
+                orderStatus: order.status,
+                clientName: order.clientName,
+                clientPhoneNumber: order.phone,
+                clientAddress: order.address,
+                orderComment: order.comment,
+            })
+        })
+
+        this.setState({
+            orderList: orders
+        })
+    }
 
    render() {
-
-        console.log(!!this.state.details)
 
        return (
 
            <div className={classes.OrderList}>
                <form className={classes.OrderListForm}>
                    {!!this.state.details ?
-                   <Order details ={this.state.details}/> :
+                   <Order details ={this.state.details}
+                          showImageHandler = {this.showImageHandler}
+                          showImage = {this.state.showImage}
+                          onImageCloseHandler = {this.onImageCloseHandler}
+                          onDetailsCloseHandler = {this.onDetailsCloseHandler}
+                   /> :
                    <TableTmp
                         columns = {this.state.columns}
                         orderList = {this.state.orderList}
                         onClickHandler = {this.showDetailsHandler}
+                        onSearchHandler = {this.onSearchHandler}
                    />}
                </form>
            </div>

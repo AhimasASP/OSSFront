@@ -1,0 +1,14 @@
+.Order {
+    display: flex;
+    justify-content: space-between;
+}
+
+.HighlightOff {
+    color: #f01f30;
+}
+
+.Details {
+    /*display: flex;*/
+    /*align-items: center;*/
+    /*text-align: -webkit-match-parent;*/
+}

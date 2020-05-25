@@ -3,8 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import InputBase from '@material-ui/core/InputBase';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
+import Button from "@material-ui/core/Button";
+
+
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,22 +28,34 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function CustomizedInputBase() {
-    const classes = useStyles();
+const CustomizedInputBase = props => {
+    const classes = useStyles()
+
+    let searchValue = ''
+
+    function setSearchValue (value) {
+        searchValue = value
+    }
+
 
     return (
         <Paper component="form" className={classes.root}>
 
             <InputBase
                 className={classes.input}
+                onChange={event => setSearchValue(event.target.value)}
                 placeholder="Search"
                 inputProps={{ 'aria-label': 'search google maps' }}
             />
-            <IconButton type="submit" className={classes.iconButton} aria-label="search">
+            <Button className={classes.iconButton} aria-label="search"
+                    onClick={() => props.onSearchHandler(searchValue)}
+            >
                 <SearchIcon />
-            </IconButton>
+            </Button>
             <Divider className={classes.divider} orientation="vertical" />
 
         </Paper>
     );
 }
+
+export default CustomizedInputBase

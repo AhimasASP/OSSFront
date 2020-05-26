@@ -12,19 +12,10 @@ import Modal from '../../UI/Modal/Modal'
 
 const OrderEditDetails = props => {
 
-    let details = {
-        clientName: '',
-        address: '',
-        phone: '',
-        orderNumber: '',
-        comment: '',
-        images: []
-    }
-
+    const details = props.newOrder
     let fileInput
-    console.log(details)
 
-    const newDetails = props.details
+    const newDetails = props.newOrder
     const cls =  props.touched ?  classes.SaveIconValid :
         classes.SaveIcon
 
@@ -33,46 +24,23 @@ const OrderEditDetails = props => {
             <div>
                 <div className={classes.Order}>
                     <div>
-                        <h2>Add new order</h2>&nbsp;
+                        <h2>Edit order details</h2>&nbsp;
                     </div>
                     <div className={classes.Order}>
 
                         <Button
                             disabled={!props.touched}
-                            // onClick={() => props.onSaveDetailsChanges(newDetails)}
+                            onClick={() => props.onCreateNewOrder(newDetails)}
                             color="primary">
                             <SaveIcon
                                 className={cls}
                                 fontSize={'large'}/>
                         </Button>
 
-                        <Modal
-                            buttonYes = {
-                                <Button
-                                    onClick={() => props.onDeleteOrderHandler(newDetails)}
-                                    color="primary">
-                                    <DeleteIcon
-                                        className={classes.DeleteIcon}
-                                        fontSize={'large'}/>
-                                </Button>}
-                            buttonNo = {  <Button
-                                color="primary">
-                                <HighlightOffIcon
-                                    onClick={() => props.onDetailsCloseHandler()}
-                                    className={classes.HighlightOff}
-                                    fontSize={'large'}/>
-                            </Button>}
-                            icon = { <DeleteIcon
-                                className={classes.DeleteIcon}
-                                fontSize={'large'}/>}
-                            mainText = 'Are you sure?'>
-
-                        </Modal>
-
                         <Button
                             color="primary">
                             <HighlightOffIcon
-                                onClick={() => props.onDetailsCloseHandler()}
+                                onClick={() => props.onCreationCloseHandler()}
                                 className={classes.HighlightOff}
                                 fontSize={'large'}/>
                         </Button>
@@ -111,12 +79,13 @@ const OrderEditDetails = props => {
                         required id="standard-required" label="Comment" defaultValue= {details.comment} />
                 </div>
                 <div className={classes.Order}>
-
                     <ImageGrid
                         images={details.images}
                         onClickHandler={props.onDeleteImageHandler}
                         icon = {<DeleteIcon style={{ color: 'white', fontSize: 30}}/>}
                     />
+
+
                     <input
                         style={{display: "none"}}
                         onChange={props.fileSelectHandler}
@@ -130,6 +99,7 @@ const OrderEditDetails = props => {
                         <AddPhotoAlternateIcon
                             className={classes.AddPhotoAlternateIcon}
                             style={{ fontSize: 100 }}
+
                         />
                     </Button>
                 </div>

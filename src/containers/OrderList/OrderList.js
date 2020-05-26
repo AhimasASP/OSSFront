@@ -32,6 +32,14 @@ export default class OrderList extends Component {
             {id: 'clientAddress', label: 'Address', minWidth: 150},
             {id: 'orderComment', label: 'Comment', minWidth: 200},
         ],
+        newOrder: {
+            clientName: '',
+            address: '',
+            phone: '',
+            orderNumber: '',
+            comment: '',
+            images: []
+        },
         loading: false
     }
 
@@ -58,6 +66,7 @@ export default class OrderList extends Component {
         } catch (e) {
             console.log(e)
         }
+
     }
 
 
@@ -76,6 +85,16 @@ export default class OrderList extends Component {
         this.setState({
             showImage: response.data
         })
+    }
+
+
+    checkForNullDetails = () => {
+        if (this.state.details === null) {
+            const emptyDetails = {images: []}
+            this.setState({
+                details: emptyDetails
+            })
+        }
     }
 
     fileSelectHandler = event => {
@@ -132,7 +151,8 @@ export default class OrderList extends Component {
             details: null,
             showImage: null,
             edit: false,
-            touched: false
+            touched: false,
+            creationNewOrder: false,
         })
     }
 
@@ -194,8 +214,40 @@ export default class OrderList extends Component {
         } catch (e) {
             console.log(e)
         }
+    }
 
+    onCreateNewOrder = async (details) => {
 
+        const newOrder = {
+            status: details.status,
+            address: details.address,
+            clientName: details.clientName,
+            phone: details.phone,
+            orderDate: details.orderDate,
+            orderNumber: details.orderNumber,
+            paymentType: details.paymentType,
+            isCredit: true,
+            creditMonthCount: 0,
+            finalSum: details.finalSum,
+            comment: details.comment
+        }
+
+        try {
+
+            const response = await axios.post('https://localhost:44374/Order/Create', newOrder )
+
+            this.state.details.images.map(async image => {
+                let file = image.split('|||')
+                if (file[1] === 'Added') {
+                    await axios.post(`https://localhost:44374/Image/Create`, {owner: response.data.id, body:file[0]})
+                }
+            })
+            await this.componentDidMount()
+            this.onDetailsCloseHandler()
+            
+        } catch (e) {
+            console.log(e)
+        }
     }
 
     onTouchEditControls = () => {
@@ -211,11 +263,9 @@ export default class OrderList extends Component {
    render() {
 
        const theme = createMuiTheme();
-
-
+       console.log(this.state.details)
 
        return (
-
 
            <div className={classes.OrderList}>
                <form className={classes.OrderListForm}>
@@ -223,7 +273,15 @@ export default class OrderList extends Component {
                    {
                        this.state.creationNewOrder ?
 
-                            <OrderAddition/> :
+                            <OrderAddition
+                                newOrder ={this.state.details}
+                                touched = {this.state.touched}
+                                onTouchEditControls = {this.onTouchEditControls}
+                                fileSelectHandler = {this.fileSelectHandler}
+                                checkForNullDetails = {this.checkForNullDetails}
+                                onCreationCloseHandler = {this.onDetailsCloseHandler}
+                                onCreateNewOrder = {this.onCreateNewOrder}
+                            /> :
 
                        !!this.state.details ?
 
@@ -256,7 +314,8 @@ export default class OrderList extends Component {
                            <hr/>
                            <div className={classes.BottomLevel}>
                                <Button
-                                   onClick={() => this.setState({creationNewOrder: true})}
+
+                                   onClick={() => this.setState({creationNewOrder: true, details: this.state.newOrder })}
                                    color="primary">
                                    <NoteAddIcon
                                        fontSize={'large'}/>

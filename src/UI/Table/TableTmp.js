@@ -10,6 +10,8 @@ import TableRow from '@material-ui/core/TableRow';
 
 const OrderList = props => {
 
+    let counter = 0
+
         return (
             <div>
                 <div  className={classes.Table}>
@@ -39,10 +41,14 @@ const OrderList = props => {
                         </TableHead>
                         <TableBody>
                             { props.orderList.map((order, index) => {
-                                return (
-                                    <TableRow hover
-                                              onClick={() => props.onClickHandler(order.id)}
-                                              tabIndex={-1} key={order.id}>
+
+                                if (props.offset <= counter && counter <= props.offset + 8){
+                                    console.log(`counter: ${counter} offset: ${props.offset}`)
+                                    counter++
+                                    return (
+                                        <TableRow hover
+                                                  onClick={() => props.onClickHandler(order.id)}
+                                                  tabIndex={-1} key={order.id}>
 
                                             {props.columns.map((column) => {
                                                 const value = order[column.id];
@@ -53,7 +59,9 @@ const OrderList = props => {
                                                 );
                                             })}
                                         </TableRow>
-                                )})}
+                                    )
+                                } else {counter++}
+                             })}
 
                         </TableBody>
                     </Table>

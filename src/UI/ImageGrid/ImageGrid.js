@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
     root: {
+        paddingTop: 20,
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-around',

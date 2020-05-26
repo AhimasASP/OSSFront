@@ -10,58 +10,92 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import Modal from '../../UI/Modal/Modal'
 
 
-const OrderAddition = props => {
+const OrderEditDetails = props => {
 
-    const details = props.newOrder
+    const details = props.details
     let fileInput
+    console.log(details)
 
-    const newDetails = props.newOrder
+    const newDetails = props.details
     const cls =  props.touched ?  classes.SaveIconValid :
         classes.SaveIcon
+
     return (
             <div>
                 <div className={classes.OrderPanel}>
+                    
                     <div className={classes.ActionsPanel}>
 
                         <Button
                             disabled={!props.touched}
-                            onClick={() => props.onCreateNewOrder(newDetails)}
+                            onClick={() => props.onSaveDetailsChanges(newDetails)}
                             color="primary">
                             <SaveIcon
                                 className={cls}
                                 fontSize={'large'}/>
                         </Button>
 
+                        <Modal
+                            buttonYes = {
+                                <Button
+                                    onClick={() => props.onDeleteOrderHandler(newDetails)}
+                                    color="primary">
+                                        <DeleteIcon
+                                            className={classes.DeleteIcon}
+                                            fontSize={'large'}/>
+                                </Button>}
+                                    buttonNo = {  <Button
+                                        color="primary">
+                                        <HighlightOffIcon
+                                            onClick={() => props.onDetailsCloseHandler()}
+                                            className={classes.HighlightOff}
+                                            fontSize={'large'}/>
+                            </Button>}
+                            icon = { <DeleteIcon
+                                className={classes.DeleteIcon}
+                                fontSize={'large'}/>}
+                            mainText = 'Are you sure?'>
+
+                        </Modal>
+
+                        {/*<Button*/}
+                        {/*    onClick={() => props.onDeleteOrderHandler(newDetails)}*/}
+                        {/*    color="primary">*/}
+                        {/*    <DeleteIcon*/}
+                        {/*        className={classes.DeleteIcon}*/}
+                        {/*        fontSize={'large'}/>*/}
+                        {/*</Button>*/}
                         <Button
                             color="primary">
                             <HighlightOffIcon
-                                onClick={() => props.onCreationCloseHandler()}
+                                onClick={() => props.onDetailsCloseHandler()}
                                 className={classes.HighlightOff}
                                 fontSize={'large'}/>
                         </Button>
                     </div>
                     <div className={classes.Form}>
                         <div>
-                            <h2>Add new order</h2>
+                            <h2>Edit order details</h2>
                         </div>
                         <ul>
                             <li>
-                            <TextField
-                                onChange={event => {
-                                    newDetails.clientName = event.target.value
-                                    props.onTouchEditControls()}}
-                                required id="standard-required"
-                                fullWidth
-                                label="Client" defaultValue= {details.clientName} />
-                                </li>
+                        <TextField
+                            onChange={event => {
+                                newDetails.clientName = event.target.value
+                                props.onTouchEditControls()}}
+                            required id="standard-required" 
+                            fullWidth
+                            label="Client" defaultValue= {details.clientName} />
+                            </li>
                             <li>
-                            <TextField
+                        <TextField
                             onChange={event => {
                                 newDetails.address = event.target.value
                                 props.onTouchEditControls()}}
                             required id="standard-required" 
                             fullWidth
                             label="Address" defaultValue= {details.address} />
+
                             </li>
                             <li>
 
@@ -74,8 +108,8 @@ const OrderAddition = props => {
                             label="Phone" defaultValue= {details.phone} />
                             </li>
                             <li>
-
-                            <TextField
+                                
+                        <TextField
                             onChange={event => {
                                 newDetails.orderNumber = event.target.value
                                 props.onTouchEditControls()}}
@@ -84,8 +118,7 @@ const OrderAddition = props => {
                             label="Order number" defaultValue= {details.orderNumber} />
                             </li>
                             <li>
-
-                            <TextField
+                        <TextField
                             onChange={event => {
                                 newDetails.comment = event.target.value
                                 props.onTouchEditControls()}}
@@ -114,6 +147,7 @@ const OrderAddition = props => {
                             <AddPhotoAlternateIcon
                                 className={classes.AddPhotoAlternateIcon}
                                 style={{ fontSize: 100 }}
+
                             />
                         </Button>
                     </div>
@@ -122,4 +156,4 @@ const OrderAddition = props => {
     )
 }
 
-export default OrderAddition
+export default OrderEditDetails

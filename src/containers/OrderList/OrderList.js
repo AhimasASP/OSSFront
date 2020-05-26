@@ -244,7 +244,7 @@ export default class OrderList extends Component {
             })
             await this.componentDidMount()
             this.onDetailsCloseHandler()
-            
+
         } catch (e) {
             console.log(e)
         }
@@ -258,12 +258,12 @@ export default class OrderList extends Component {
 
     handleClick(offset) {
         this.setState({ offset });
+        console.log('offset: ' + offset)
     }
 
    render() {
 
        const theme = createMuiTheme();
-       console.log(this.state.details)
 
        return (
 
@@ -306,6 +306,7 @@ export default class OrderList extends Component {
                    /> :
                        <div>
                            <TableTmp
+                                offset = {this.state.offset}
                                 columns = {this.state.columns}
                                 orderList = {this.state.orderList}
                                 onClickHandler = {this.showDetailsHandler}
@@ -324,9 +325,9 @@ export default class OrderList extends Component {
                                <MuiThemeProvider theme={theme}>
                                    <CssBaseline />
                                    <Pagination
-                                       limit={10}
+                                       limit={8}
                                        offset={this.state.offset}
-                                       total={100}
+                                       total={this.state.orderList.length}
                                        onClick={(e, offset) => this.handleClick(offset)}
                                    />
                                </MuiThemeProvider>

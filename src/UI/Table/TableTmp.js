@@ -1,4 +1,5 @@
 import React from "react";
+import classes from './TableTmp.css'
 import SearchInput from "../../UI/SearchInput";
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,13 +12,17 @@ const OrderList = props => {
 
         return (
             <div>
-            <div>
-            <h2>Orders</h2>
-            <SearchInput
-                onSearchHandler = {props.onSearchHandler}
-            />
-        </div>
-    <hr/>
+                <div  className={classes.Table}>
+                    <span>
+                    <h2>Orders</h2>
+                    </span>
+                    <div>
+                    <SearchInput
+                        onSearchHandler = {props.onSearchHandler}
+                    />
+                    </div>
+                </div>
+                     <hr/>
                     <Table>
                         <TableHead>
                             <TableRow>

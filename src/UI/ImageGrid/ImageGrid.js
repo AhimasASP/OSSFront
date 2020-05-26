@@ -3,7 +3,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import GridList from '@material-ui/core/GridList';
 import GridListTile from '@material-ui/core/GridListTile';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
-import AspectRatioIcon from '@material-ui/icons/AspectRatio'
 import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles((theme) => ({
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         transform: 'translateZ(0)',
     },
     title: {
-        color: 'gray',
+        color: 'white',
     },
     titleBar: {
         background:
@@ -48,7 +47,7 @@ const SingleLineGridList = props => {
 
     return (
         <div className={classes.root}>
-            <GridList className={classes.gridList} cols={2.5} cellHeight={260}>
+            <GridList className={classes.gridList} cols={4} cellHeight={200}>
                 {tileData.map((tile) => (
                     <GridListTile key={tile.title}>
                         <img src={tile.img}
@@ -61,9 +60,9 @@ const SingleLineGridList = props => {
                             }}
                             actionIcon={
 
-                                <Button color="primary" onClick={() => props.showImageHandler(tile.title)}>
-                                        <AspectRatioIcon className={classes.title}
-                                        />
+                                <Button color="primary" onClick={() => props.onClickHandler(tile.title)}>
+                                    {props.icon}
+
                                 </Button>
                             }
                         />

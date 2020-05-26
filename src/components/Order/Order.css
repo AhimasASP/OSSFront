@@ -3,12 +3,47 @@
     justify-content: space-between;
 }
 
+.Order button {
+    padding: 20px;
+}
+
 .HighlightOff {
-    color: #f01f30;
+    color: #e5061a;
+}
+
+.EditIcon {
+    color: black;
+}
+
+.AddPhotoAlternateIcon {
+    color: green;
+    font-size: 40px;
+}
+
+.SaveIcon {
+    color: lightgray;
+}
+.SaveIconValid {
+    color: black;
 }
 
 .Details {
-    /*display: flex;*/
-    /*align-items: center;*/
-    /*text-align: -webkit-match-parent;*/
+    text-align: center;
 }
+
+.Details div {
+    position: relative;
+    display: inline-block;
+}
+
+.Details button {
+
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.DetailsIcon {
+    color: white;
+}
+

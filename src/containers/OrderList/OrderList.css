@@ -22,7 +22,6 @@
 
 .OrderList h2 {
     text-align: left;
-    width: 100px;
 }
 
 .OrderListForm {
@@ -31,6 +30,7 @@
     padding: 15px;
     border-radius: 5px;
     width: 95%;
+    min-height: 750px;
 }
 .OrderListForm tr {
     background: white;

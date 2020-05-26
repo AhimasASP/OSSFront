@@ -3,6 +3,11 @@
     justify-content: space-between;
 }
 
+.Order  {
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
 .Order button {
     padding: 20px;
 }
@@ -12,6 +17,10 @@
 }
 
 .EditIcon {
+    color: black;
+}
+
+.DeleteIcon {
     color: black;
 }
 

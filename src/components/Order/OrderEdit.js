@@ -7,6 +7,7 @@ import TextField from "@material-ui/core/TextField";
 import SaveIcon from "@material-ui/icons/Save";
 import AddPhotoAlternateIcon from "@material-ui/icons/AddPhotoAlternate";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Modal from '../../UI/Modal/Modal'
 
 
 const OrderEditDetails = props => {
@@ -19,11 +20,6 @@ const OrderEditDetails = props => {
     const cls =  props.touched ?  classes.SaveIconValid :
         classes.SaveIcon
 
-    const files = []
-
-
-
-
     return (
         <div className={classes.Order}>
                 <div>
@@ -31,7 +27,8 @@ const OrderEditDetails = props => {
                         <div>
                             <h2>Edit order details</h2>&nbsp;
                         </div>
-                        <div>
+                        <div className={classes.Order}>
+
                             <Button
                                 disabled={!props.touched}
                                 onClick={() => props.onSaveDetailsChanges(newDetails)}
@@ -40,13 +37,37 @@ const OrderEditDetails = props => {
                                     className={cls}
                                     fontSize={'large'}/>
                             </Button>
-                            <Button
-                                //onClick={() => props.onSaveDetailsChanges(newDetails)}
-                                color="primary">
-                                <DeleteIcon
-                                    className={cls}
-                                    fontSize={'large'}/>
-                            </Button>
+
+                            <Modal
+                                buttonYes = {
+                                    <Button
+                                        onClick={() => props.onDeleteOrderHandler(newDetails)}
+                                        color="primary">
+                                            <DeleteIcon
+                                                className={classes.DeleteIcon}
+                                                fontSize={'large'}/>
+                                    </Button>}
+                                        buttonNo = {  <Button
+                                            color="primary">
+                                            <HighlightOffIcon
+                                                onClick={() => props.onDetailsCloseHandler()}
+                                                className={classes.HighlightOff}
+                                                fontSize={'large'}/>
+                                </Button>}
+                                icon = { <DeleteIcon
+                                    className={classes.DeleteIcon}
+                                    fontSize={'large'}/>}
+                                mainText = 'Are you sure?'>
+
+                            </Modal>
+
+                            {/*<Button*/}
+                            {/*    onClick={() => props.onDeleteOrderHandler(newDetails)}*/}
+                            {/*    color="primary">*/}
+                            {/*    <DeleteIcon*/}
+                            {/*        className={classes.DeleteIcon}*/}
+                            {/*        fontSize={'large'}/>*/}
+                            {/*</Button>*/}
                             <Button
                                 color="primary">
                                 <HighlightOffIcon

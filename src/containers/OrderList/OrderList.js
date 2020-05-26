@@ -2,17 +2,21 @@ import React, {Component} from "react";
 import axios from 'axios'
 import Order from '../../components/Order/Order'
 import OrderEdit from '../../components/Order/OrderEdit'
+import OrderAddition from '../../components/Order/OrderAddition'
 import classes from './OrderList.css'
 import TableTmp from "../../UI/Table/TableTmp";
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
+import NoteAddIcon from "@material-ui/icons/NoteAdd";
 
 export default class OrderList extends Component {
 
 
 
     state = {
+        creationNewOrder: false,
         offset: 0,
         orderList: [],
         edit: false,
@@ -104,6 +108,17 @@ export default class OrderList extends Component {
         await axios.delete(`https://localhost:44374/Image/Delete/${id}`)
         await this.showDetailsHandler(this.state.orderForDetailsId)
         this.render()
+    }
+
+    onDeleteOrderHandler = async () => {
+       try {
+           await axios.delete(`https://localhost:44374/Order/Delete/${this.state.details.id}`)
+           await this.componentDidMount()
+           this.onDetailsCloseHandler()
+       } catch (e) {
+           console.log(e)
+       }
+
     }
 
     onImageCloseHandler = () => {
@@ -205,7 +220,12 @@ export default class OrderList extends Component {
            <div className={classes.OrderList}>
                <form className={classes.OrderListForm}>
 
-                   {!!this.state.details ?
+                   {
+                       this.state.creationNewOrder ?
+
+                            <OrderAddition/> :
+
+                       !!this.state.details ?
 
                       this.state.edit ?
                           <OrderEdit
@@ -215,6 +235,7 @@ export default class OrderList extends Component {
                               touched = {this.state.touched}
                               onTouchEditControls = {this.onTouchEditControls}
                               onDeleteImageHandler = {this.onDeleteImageHandler}
+                              onDeleteOrderHandler = {this.onDeleteOrderHandler}
                               fileSelectHandler = {this.fileSelectHandler}
                           /> :
 
@@ -232,15 +253,25 @@ export default class OrderList extends Component {
                                 onClickHandler = {this.showDetailsHandler}
                                 onSearchHandler = {this.onSearchHandler}
                            />
-                           <MuiThemeProvider theme={theme}>
-                               <CssBaseline />
-                               <Pagination
-                                   limit={10}
-                                   offset={this.state.offset}
-                                   total={100}
-                                   onClick={(e, offset) => this.handleClick(offset)}
-                               />
-                           </MuiThemeProvider>
+                           <hr/>
+                           <div className={classes.BottomLevel}>
+                               <Button
+                                   onClick={() => this.setState({creationNewOrder: true})}
+                                   color="primary">
+                                   <NoteAddIcon
+                                       fontSize={'large'}/>
+                                       Add new order
+                               </Button>
+                               <MuiThemeProvider theme={theme}>
+                                   <CssBaseline />
+                                   <Pagination
+                                       limit={10}
+                                       offset={this.state.offset}
+                                       total={100}
+                                       onClick={(e, offset) => this.handleClick(offset)}
+                                   />
+                               </MuiThemeProvider>
+                           </div>
                        </div>
                    }
                </form>

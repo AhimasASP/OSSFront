@@ -7,6 +7,12 @@
     width: 100%;
     background: linear-gradient(180deg, black 0%, cadetblue 100%);
 }
+
+.BottomLevel {
+    display: flex;
+    justify-content: space-between;
+}
+
 .OrderList > div {
     width: 100%;
     height: 100%;

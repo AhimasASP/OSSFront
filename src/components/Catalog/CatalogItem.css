@@ -1,0 +1,72 @@
+.Catalog {
+    display: flex;
+    justify-content: space-between;
+}
+
+.CatalogPanel {
+    text-align: center;
+    position: relative;
+}
+
+.ActionsPanel {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+}
+
+.Form {
+    width: 550px;
+    display: inline-block;
+}
+
+.Form h2, .Form ul, .Form li {
+    width: 100%;
+}
+
+.Catalog button {
+    padding: 20px;
+}
+
+.HighlightOff {
+    color: #e5061a;
+}
+
+.EditIcon {
+    color: black;
+}
+
+.AddPhotoAlternateIcon {
+    color: green;
+    font-size: 40px;
+}
+
+.SaveIcon {
+    color: lightgray;
+}
+.SaveIconValid {
+    color: black;
+}
+
+.Details {
+    text-align: center;
+}
+
+.Details div {
+    position: relative;
+    display: inline-block;
+}
+
+.Details button {
+
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.DetailsIcon {
+    color: white;
+}
+

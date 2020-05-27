@@ -1,110 +1,71 @@
 import React, {Component} from "react";
 import axios from 'axios'
-import Order from '../../components/Order/Order'
-import OrderEdit from '../../components/Order/OrderEdit'
-import OrderAddition from '../../components/Order/OrderAddition'
-import classes from './OrderList.css'
+import CatalogItem from '../../components/Catalog/CatalogItem'
+import CatalogItemEdit from '../../components/Catalog/CatalogItemEdit'
+import CatalogItemAddition from '../../components/Catalog/CatalogItemAddition'
+import classes from './Catalog.css'
 import TableTmp from "../../UI/Table/TableTmp";
 import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import NoteAddIcon from "@material-ui/icons/NoteAdd";
-// import authService from 'api-authorization'
 
-export default class OrderList extends Component {
+export default class Catalog extends Component {
+
+
 
     state = {
-        creationNewOrder: false,
+        creationNewItem: false,
         offset: 0,
-        hui: {
-            hui: 'hui',
-            dlinna: 15
-        },
-        currency: {},
-        orderList: [],
+        catalog: [],
         edit: false,
-        orderForDetailsId: '',
+        itemIdForDetails: '',
         details: null,
         showImage: null,
         touched: false,
         columns: [
-            {id: 'orderNumber', label: 'Order number', minWidth: 50},
-            {id: 'orderStatus', label: 'Status', minWidth: 30},
-            {id: 'clientName', label: 'Client', minWidth: 100},
-            {id: 'clientPhoneNumber', label: 'Phone number', minWidth: 100},
-            {id: 'clientAddress', label: 'Address', minWidth: 150},
-            {id: 'orderComment', label: 'Comment', minWidth: 200},
+            {id: 'article', label: 'Item article', minWidth: 100},
+            {id: 'name', label: 'Item name', minWidth: 100},
+            {id: 'type', label: 'Type', minWidth: 50},
+            {id: 'size', label: 'Size', minWidth: 50},
+            {id: 'currency', label: 'Currency', minWidth: 100},
+            {id: 'price', label: 'Price', minWidth: 50},
+            {id: 'description', label: 'Description', minWidth: 200},
         ],
-        newOrder: {
-            clientName: '',
-            address: '',
-            phone: '',
-            orderNumber: '',
-            comment: '',
+        newItem: {
+            article: '',
+            name: '',
+            type: '',
+            size: '',
+            currency: '',
+            price: '',
+            description: '',
             images: []
         },
         loading: false
     }
 
     async componentDidMount() {
-
-        // try {
-        //
-        //         const token = await authService.getAccessToken();
-        //         const Authresponse = await fetch('https://localhost:44374/Authorization/LogIn?UserName=Admin&Password=Asddsa_123', {
-        //             headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-        //         });
-        //         const data = await Authresponse.json();
-        //         this.setState({ forecasts: data, loading: false });
-        //
-        //     console.log('Auth response: ' +  Authresponse.data)
-        // } catch (e) {
-        //     console.log(e)
-        // }
-
         try {
-            let response = await axios.get('https://localhost:44374/Order/Index')
-
-
-            const orderList = []
-            response.data.map((order, index) => {
-                orderList.push({
-                    id: order.id,
-                    orderNumber: order.orderNumber,
-                    orderStatus: order.status,
-                    clientName: order.clientName,
-                    clientPhoneNumber: order.phone,
-                    clientAddress: order.address,
-                    orderComment: order.comment,
+            let response = await axios.get('https://localhost:44374/Item/Index')
+            const catalog = []
+            response.data.map((item, index) => {
+                catalog.push({
+                    id: item.id,
+                    article: item.article,
+                    name: item.name,
+                    type: item.type,
+                    size: item.size,
+                    currency: item.currency,
+                    price: item.price,
+                    description: item.description,
                 })
             })
 
-            this.setState({
-                orderList,
-                loading: false
-            })
-        } catch (e) {
-            console.log(e)
-        }
-
-        try {
-            const currency = {
-                usd: '',
-                eur: '',
-                rub: '',
-            }
-
-            const usd = (await axios.get(`https://www.nbrb.by/api/exrates/rates/USD?parammode=2`)).data.Cur_OfficialRate
-            const eur  = (await axios.get(`https://www.nbrb.by/api/exrates/rates/EUR?parammode=2`)).data.Cur_OfficialRate
-            const rub = (await axios.get(`https://www.nbrb.by/api/exrates/rates/RUB?parammode=2`)).data.Cur_OfficialRate
-
-           currency.usd = usd.toString()
-           currency.eur = eur.toString()
-           currency.rub = rub.toString()
 
             this.setState({
-                currency
+                catalog, loading: false
             })
         } catch (e) {
             console.log(e)
@@ -115,9 +76,9 @@ export default class OrderList extends Component {
 
 
    showDetailsHandler = async (id) => {
-       const response = await axios.get(`https://localhost:44374/Order/Get/${id}`)
+       const response = await axios.get(`https://localhost:44374/Item/Get/${id}`)
        this.setState({
-           orderForDetailsId: id,
+           itemIdForDetails: id,
            details: response.data
        })
     }
@@ -168,13 +129,13 @@ export default class OrderList extends Component {
     onDeleteImageHandler = async (id) => {
 
         await axios.delete(`https://localhost:44374/Image/Delete/${id}`)
-        await this.showDetailsHandler(this.state.orderForDetailsId)
+        await this.showDetailsHandler(this.state.itemIdForDetails)
         this.render()
     }
 
-    onDeleteOrderHandler = async () => {
+    onDeleteItemHandler = async () => {
        try {
-           await axios.delete(`https://localhost:44374/Order/Delete/${this.state.details.id}`)
+           await axios.delete(`https://localhost:44374/Item/Delete/${this.state.details.id}`)
            await this.componentDidMount()
            this.onDetailsCloseHandler()
        } catch (e) {
@@ -195,30 +156,31 @@ export default class OrderList extends Component {
             showImage: null,
             edit: false,
             touched: false,
-            creationNewOrder: false,
+            creationNewItem: false,
         })
     }
 
     onSearchHandler = async (param) => {
 
         if (param === '') return {}
-        const response = await axios.get(`https://localhost:44374/Order/Search/${param}`)
-        const orders = []
+        const response = await axios.get(`https://localhost:44374/Item/Search/${param}`)
+        const items = []
 
-        response.data.map((order, index) => {
-             orders.push({
-                id: order.id,
-                orderNumber: order.orderNumber,
-                orderStatus: order.status,
-                clientName: order.clientName,
-                clientPhoneNumber: order.phone,
-                clientAddress: order.address,
-                orderComment: order.comment,
+        response.data.map((item, index) => {
+             items.push({
+                 id: item.id,
+                 article: item.article,
+                 name: item.name,
+                 type: item.type,
+                 size: item.size,
+                 currency: item.currency,
+                 price: item.price,
+                 description: item.description,
             })
         })
 
         this.setState({
-            orderList: orders
+            catalog: items
         })
     }
 
@@ -238,20 +200,21 @@ export default class OrderList extends Component {
       })
 
         const details = {
-            status: changes.status,
-            address: changes.address,
-            clientName: changes.clientName,
-            phone: changes.phone,
-            orderDate: changes.orderDate,
-            orderNumber: changes.orderNumber,
-            paymentType: changes.paymentType,
-            isCredit: true,
-            creditMonthCount: 0,
-            finalSum: changes.finalSum,
-            comment: changes.comment
+
+            article: changes.article,
+            name: changes.name,
+            type: changes.type,
+            size: changes.size,
+            currency: changes.currency,
+            price: changes.price,
+            photo: '',
+            purchasePrice: 0,
+            description: changes.description,
+
         }
+
         try {
-            await axios.put(`https://localhost:44374/Order/Modify/${changes.id}`, details)
+            await axios.put(`https://localhost:44374/Item/Modify/${changes.id}`, details)
             await this.componentDidMount()
             this.onDetailsCloseHandler()
         } catch (e) {
@@ -259,25 +222,24 @@ export default class OrderList extends Component {
         }
     }
 
-    onCreateNewOrder = async (details) => {
+    onCreateNewItem = async (details) => {
 
-        const newOrder = {
-            status: details.status,
-            address: details.address,
-            clientName: details.clientName,
-            phone: details.phone,
-            orderDate: details.orderDate,
-            orderNumber: details.orderNumber,
-            paymentType: details.paymentType,
-            isCredit: true,
-            creditMonthCount: 0,
-            finalSum: details.finalSum,
-            comment: details.comment
+        const newItem = {
+
+            article: details.article,
+            name: details.name,
+            type: details.type,
+            size: details.size,
+            currency: details.currency,
+            price: details.price,
+            photo: '',
+            purchasePrice: '',
+            description: details.description,
         }
 
         try {
 
-            const response = await axios.post('https://localhost:44374/Order/Create', newOrder )
+            const response = await axios.post('https://localhost:44374/Item/Create', newItem )
 
             this.state.details.images.map(async image => {
                 let file = image.split('|||')
@@ -301,7 +263,6 @@ export default class OrderList extends Component {
 
     handleClick(offset) {
         this.setState({ offset });
-        console.log('offset: ' + offset)
     }
 
    render() {
@@ -310,37 +271,37 @@ export default class OrderList extends Component {
 
        return (
 
-           <div className={classes.OrderList}>
-               <form className={classes.OrderListForm}>
+           <div className={classes.Catalog}>
+               <form className={classes.CatalogForm}>
 
                    {
-                       this.state.creationNewOrder ?
+                       this.state.creationNewItem ?
 
-                            <OrderAddition
-                                newOrder ={this.state.details}
+                            <CatalogItemAddition
+                                newItem ={this.state.details}
                                 touched = {this.state.touched}
                                 onTouchEditControls = {this.onTouchEditControls}
                                 fileSelectHandler = {this.fileSelectHandler}
                                 checkForNullDetails = {this.checkForNullDetails}
                                 onCreationCloseHandler = {this.onDetailsCloseHandler}
-                                onCreateNewOrder = {this.onCreateNewOrder}
+                                onCreateNewItem = {this.onCreateNewItem}
                             /> :
 
                        !!this.state.details ?
 
                       this.state.edit ?
-                          <OrderEdit
+                          <CatalogItemEdit
                               details ={this.state.details}
                               onDetailsCloseHandler = {this.onDetailsCloseHandler}
                               onSaveDetailsChanges = {this.onSaveDetailsChanges}
                               touched = {this.state.touched}
                               onTouchEditControls = {this.onTouchEditControls}
                               onDeleteImageHandler = {this.onDeleteImageHandler}
-                              onDeleteOrderHandler = {this.onDeleteOrderHandler}
+                              onDeleteItemHandler = {this.onDeleteItemHandler}
                               fileSelectHandler = {this.fileSelectHandler}
                           /> :
 
-                   <Order details ={this.state.details}
+                   <CatalogItem details ={this.state.details}
                           showImageHandler = {this.showImageHandler}
                           showImage = {this.state.showImage}
                           onImageCloseHandler = {this.onImageCloseHandler}
@@ -350,10 +311,8 @@ export default class OrderList extends Component {
                        <div>
                            <TableTmp
                                 offset = {this.state.offset}
-                                hui = {this.state.hui}
-                                currency = {this.state.currency}
                                 columns = {this.state.columns}
-                                elementslist = {this.state.orderList}
+                                elementslist = {this.state.catalog}
                                 onClickHandler = {this.showDetailsHandler}
                                 onSearchHandler = {this.onSearchHandler}
                            />
@@ -361,18 +320,18 @@ export default class OrderList extends Component {
                            <div className={classes.BottomLevel}>
                                <Button
 
-                                   onClick={() => this.setState({creationNewOrder: true, details: this.state.newOrder })}
+                                   onClick={() => this.setState({creationNewItem: true, details: this.state.newItem })}
                                    color="primary">
                                    <NoteAddIcon
                                        fontSize={'large'}/>
-                                       Add new order
+                                       Add new catalog item
                                </Button>
                                <MuiThemeProvider theme={theme}>
                                    <CssBaseline />
                                    <Pagination
                                        limit={8}
                                        offset={this.state.offset}
-                                       total={this.state.orderList.length}
+                                       total={this.state.catalog.length}
                                        onClick={(e, offset) => this.handleClick(offset)}
                                    />
                                </MuiThemeProvider>

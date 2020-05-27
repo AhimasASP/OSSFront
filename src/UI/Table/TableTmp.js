@@ -6,6 +6,9 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TextField from "@material-ui/core/TextField";
+import InputLabel from "@material-ui/core/InputLabel";
+import FormControl from "@material-ui/core/FormControl";
 
 
 const OrderList = props => {
@@ -18,6 +21,12 @@ const OrderList = props => {
                     <span>
                     <h2>Orders</h2>
                     </span>
+
+                    {/*<div>*/}
+                    {/*    {"  USD: " + props.currency.usd}*/}
+                    {/*    {"  EUR: " + props.currency.eur}*/}
+                    {/*    {"  RUB: " + props.currency.rub}*/}
+                    {/*</div>*/}
                     <div>
                     <SearchInput
                         onSearchHandler = {props.onSearchHandler}
@@ -40,10 +49,9 @@ const OrderList = props => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            { props.orderList.map((order, index) => {
+                            { props.elementslist.map((order, index) => {
 
                                 if (props.offset <= counter && counter <= props.offset + 8){
-                                    console.log(`counter: ${counter} offset: ${props.offset}`)
                                     counter++
                                     return (
                                         <TableRow hover

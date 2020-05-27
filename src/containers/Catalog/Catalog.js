@@ -10,6 +10,7 @@ import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import NoteAddIcon from "@material-ui/icons/NoteAdd";
+import Loading from '../../UI/Loader/Loader'
 
 export default class Catalog extends Component {
 
@@ -18,6 +19,7 @@ export default class Catalog extends Component {
     state = {
         creationNewItem: false,
         offset: 0,
+        currency: {},
         catalog: [],
         edit: false,
         itemIdForDetails: '',
@@ -43,7 +45,7 @@ export default class Catalog extends Component {
             description: '',
             images: []
         },
-        loading: false
+        loading: true
     }
 
     async componentDidMount() {
@@ -66,6 +68,28 @@ export default class Catalog extends Component {
 
             this.setState({
                 catalog, loading: false
+            })
+        } catch (e) {
+            console.log(e)
+        }
+
+        try {
+            const currency = {
+                usd: '',
+                eur: '',
+                rub: '',
+            }
+
+            const usd = (await axios.get(`https://www.nbrb.by/api/exrates/rates/USD?parammode=2`)).data.Cur_OfficialRate
+            const eur  = (await axios.get(`https://www.nbrb.by/api/exrates/rates/EUR?parammode=2`)).data.Cur_OfficialRate
+            const rub = (await axios.get(`https://www.nbrb.by/api/exrates/rates/RUB?parammode=2`)).data.Cur_OfficialRate
+
+            currency.usd = usd.toString()
+            currency.eur = eur.toString()
+            currency.rub = rub.toString()
+
+            this.setState({
+                currency
             })
         } catch (e) {
             console.log(e)
@@ -224,6 +248,8 @@ export default class Catalog extends Component {
 
     onCreateNewItem = async (details) => {
 
+
+
         const newItem = {
 
             article: details.article,
@@ -233,9 +259,10 @@ export default class Catalog extends Component {
             currency: details.currency,
             price: details.price,
             photo: '',
-            purchasePrice: '',
+            purchasePrice: 0,
             description: details.description,
         }
+        console.log(newItem)
 
         try {
 
@@ -275,6 +302,9 @@ export default class Catalog extends Component {
                <form className={classes.CatalogForm}>
 
                    {
+
+                       this.state.loading ? <Loading/> :
+
                        this.state.creationNewItem ?
 
                             <CatalogItemAddition
@@ -310,6 +340,7 @@ export default class Catalog extends Component {
                    /> :
                        <div>
                            <TableTmp
+                                currency = {this.state.currency}
                                 offset = {this.state.offset}
                                 columns = {this.state.columns}
                                 elementslist = {this.state.catalog}

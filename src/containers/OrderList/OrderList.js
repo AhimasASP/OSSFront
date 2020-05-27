@@ -9,18 +9,14 @@ import Pagination from "material-ui-flat-pagination";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import { createMuiTheme, MuiThemeProvider } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import Loader from '../../UI/Loader/Loader'
 import NoteAddIcon from "@material-ui/icons/NoteAdd";
-// import authService from 'api-authorization'
 
 export default class OrderList extends Component {
 
     state = {
         creationNewOrder: false,
         offset: 0,
-        hui: {
-            hui: 'hui',
-            dlinna: 15
-        },
         currency: {},
         orderList: [],
         edit: false,
@@ -30,7 +26,7 @@ export default class OrderList extends Component {
         touched: false,
         columns: [
             {id: 'orderNumber', label: 'Order number', minWidth: 50},
-            {id: 'orderStatus', label: 'Status', minWidth: 30},
+            {id: 'sum', label: 'Order sum', minWidth: 30},
             {id: 'clientName', label: 'Client', minWidth: 100},
             {id: 'clientPhoneNumber', label: 'Phone number', minWidth: 100},
             {id: 'clientAddress', label: 'Address', minWidth: 150},
@@ -44,35 +40,20 @@ export default class OrderList extends Component {
             comment: '',
             images: []
         },
-        loading: false
+        loading: true
     }
 
     async componentDidMount() {
 
-        // try {
-        //
-        //         const token = await authService.getAccessToken();
-        //         const Authresponse = await fetch('https://localhost:44374/Authorization/LogIn?UserName=Admin&Password=Asddsa_123', {
-        //             headers: !token ? {} : { 'Authorization': `Bearer ${token}` }
-        //         });
-        //         const data = await Authresponse.json();
-        //         this.setState({ forecasts: data, loading: false });
-        //
-        //     console.log('Auth response: ' +  Authresponse.data)
-        // } catch (e) {
-        //     console.log(e)
-        // }
-
         try {
             let response = await axios.get('https://localhost:44374/Order/Index')
-
 
             const orderList = []
             response.data.map((order, index) => {
                 orderList.push({
                     id: order.id,
                     orderNumber: order.orderNumber,
-                    orderStatus: order.status,
+                    sum: order.finalSum,
                     clientName: order.clientName,
                     clientPhoneNumber: order.phone,
                     clientAddress: order.address,
@@ -261,6 +242,8 @@ export default class OrderList extends Component {
 
     onCreateNewOrder = async (details) => {
 
+
+
         const newOrder = {
             status: details.status,
             address: details.address,
@@ -276,7 +259,7 @@ export default class OrderList extends Component {
         }
 
         try {
-
+            console.log(newOrder)
             const response = await axios.post('https://localhost:44374/Order/Create', newOrder )
 
             this.state.details.images.map(async image => {
@@ -307,6 +290,7 @@ export default class OrderList extends Component {
    render() {
 
        const theme = createMuiTheme();
+       console.log(this.state.loading)
 
        return (
 
@@ -314,6 +298,9 @@ export default class OrderList extends Component {
                <form className={classes.OrderListForm}>
 
                    {
+
+                       this.state.loading ? <Loader/> :
+
                        this.state.creationNewOrder ?
 
                             <OrderAddition
@@ -350,7 +337,6 @@ export default class OrderList extends Component {
                        <div>
                            <TableTmp
                                 offset = {this.state.offset}
-                                hui = {this.state.hui}
                                 currency = {this.state.currency}
                                 columns = {this.state.columns}
                                 elementslist = {this.state.orderList}

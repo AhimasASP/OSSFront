@@ -18,15 +18,9 @@ const OrderList = props => {
         return (
             <div>
                 <div  className={classes.Table}>
-                    <span>
-                    <h2>Orders</h2>
-                    </span>
-
-                    {/*<div>*/}
-                    {/*    {"  USD: " + props.currency.usd}*/}
-                    {/*    {"  EUR: " + props.currency.eur}*/}
-                    {/*    {"  RUB: " + props.currency.rub}*/}
-                    {/*</div>*/}
+                        <span> <h2>USD:  {props.currency.usd}</h2></span>
+                        <span> <h2>EUR:  {props.currency.eur}</h2></span>
+                        <span> <h2>RUB:  {props.currency.rub}</h2></span>
                     <div>
                     <SearchInput
                         onSearchHandler = {props.onSearchHandler}
